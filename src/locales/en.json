@@ -1,0 +1,19 @@
+{
+    "login": "Sign In",
+    "password": "Password",
+    "register": "Sign Up",
+    "forgotPassword": "Forgot Password?",
+    "signInWithGoogle": "Sign In with Google",
+    "logout": "Sign Out",
+    "deleteAccount": "Delete Account",
+    "changePassword": "Change Password",
+    "welcomeUser": "Welcome to your Task Manager!",
+    "taskTitle": "Task title",
+    "taskDescription": "Task description",
+    "dueDate": "Due date",
+    "addTask": "Add Task",
+    "noTasks": "No tasks found",
+    "taskReminder": "Task Reminder",
+    "dueIn30Min": "due in 30 minutes!",
+    "task": "Task"
+  }

@@ -1,0 +1,19 @@
+{
+    "login": "Entrar",
+    "password": "Senha",
+    "register": "Cadastrar",
+    "forgotPassword": "Esqueceu a senha?",
+    "signInWithGoogle": "Entrar com Google",
+    "logout": "Sair",
+    "deleteAccount": "Excluir Conta",
+    "changePassword": "Alterar Senha",
+    "welcomeUser": "Bem-vindo ao seu Gerenciador de Tarefas!",
+    "taskTitle": "Título da tarefa",
+    "taskDescription": "Descrição da tarefa",
+    "dueDate": "Data de vencimento",
+    "addTask": "Adicionar Tarefa",
+    "noTasks": "Nenhuma tarefa encontrada",
+    "taskReminder": "Lembrete de Tarefa",
+    "dueIn30Min": "vence em 30 minutos!",
+    "task": "Tarefa"
+  }
