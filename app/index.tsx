@@ -22,7 +22,7 @@ export default function LoginScreen() {
 
   // Configuração do Google Sign-In
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    clientId: 'SEU_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+    clientId: '425057294849-ivm2ohfoin38tbgrr96sg2kqktfr3bkp.apps.googleusercontent.com',
   });
 
   // Função para mudar idioma
