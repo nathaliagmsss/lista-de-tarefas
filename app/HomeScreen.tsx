@@ -1,4 +1,4 @@
-import { Text, Button, Alert, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator, FlatList, View } from "react-native";
+import { TouchableOpacity, Text, Button, Alert, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ActivityIndicator, FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
@@ -9,9 +9,19 @@ import { deleteUser } from "firebase/auth";
 import { collection, addDoc, db, getDocs, query, where, orderBy, Timestamp } from "../src/services/firebaseConfig";
 import { useTheme } from "../src/context/ThemeContext";
 import { useTranslation } from 'react-i18next';
-// import * as Notifications from "expo-notifications"  // ← REMOVIDO TEMPORARIAMENTE
-import { useMotivationalQuote } from '../src/services/api';
 
+import { useMotivationalQuote } from '../src/services/api';
+import * as Notifications from 'expo-notifications';
+
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowBanner: true, 
+    shouldPlaySound: true,   
+    shouldShowList: true,   
+    shouldSetBadge: false,   
+  }),
+});
 
 interface Task {
     id: string,
@@ -32,6 +42,8 @@ export default function HomeScreen() {
     const [dueDate, setDueDate] = useState(new Date(Date.now() + 24 * 60 * 60 * 1000)) // Amanhã
     const router = useRouter()
     const [listaTasks, setListaTasks] = useState<Task[]>([])
+
+
 
     // Hook do TanStack Query para frase motivacional
     const { data: quote, isLoading: quoteLoading, refetch: refetchQuote } = useMotivationalQuote();
@@ -121,10 +133,47 @@ export default function HomeScreen() {
         )
     }
 
+
+
     const realizarLogoff = async () => {
         await AsyncStorage.removeItem('@user')
         router.replace('/')
     }
+
+    
+
+     useEffect(() => {
+    (async () => {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus === 'granted') {
+        console.log('Permissão para notificações concedida');
+      }
+    })();
+  }, []);
+
+
+  useEffect(() => {
+  const agendarNotificacao = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Mensagem motivacional do dia!!",
+        body: "Aproveite uma bela mensagem hoje :)",
+      },
+      trigger: {
+        type: "timeInterval",
+        seconds: 2,
+        repeats: false,
+      } as Notifications.TimeIntervalTriggerInput,
+    });
+  };
+
+  agendarNotificacao();
+}, []);
 
 
     useEffect(() => {
@@ -210,7 +259,8 @@ export default function HomeScreen() {
                     <Text style={[styles.dateButton, { color: colors.text }]}>
                         {t("dueDate") || "Data"}: {dueDate.toLocaleDateString()}
                     </Text>
-                    
+
+
                     <Button title={t("addTask") || "Adicionar Tarefa"} onPress={salvarTask} />
                 </View>
             </KeyboardAvoidingView>
